@@ -9,7 +9,8 @@ CREATE TABLE public.users
     username character varying(30) COLLATE pg_catalog."default" NOT NULL,
     password character varying(16) COLLATE pg_catalog."default" NOT NULL,
     is_admin bit(1) NOT NULL DEFAULT '0'::"bit",
-    CONSTRAINT users_pkey PRIMARY KEY (user_id)
+    CONSTRAINT users_pkey PRIMARY KEY (user_id),
+    CONSTRAINT username_unique UNIQUE (username)
 )
 
 TABLESPACE pg_default;
