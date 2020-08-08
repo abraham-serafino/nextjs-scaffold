@@ -7,8 +7,8 @@ describe('/users/login', () => {
       expect(response.body).to.have.property("success")
 
       const { fullname, isAdmin } = response.body.success
-      expect(fullname).toBe("Bob Smith")
-      expect(isAdmin).toBe(0)
+      expect(fullname).to.equal("Bob Smith")
+      expect(isAdmin).to.equal(0)
     })
   })
 })
