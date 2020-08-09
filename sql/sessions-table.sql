@@ -7,6 +7,8 @@ CREATE TABLE public.sessions
     session_id bigint NOT NULL DEFAULT nextval('sessions_session_id_seq'::regclass),
     user_id integer NOT NULL DEFAULT nextval('sessions_user_id_seq'::regclass),
     token uuid NOT NULL,
+    session_data json,
+    expires bigint DEFAULT 0,
     CONSTRAINT sessions_pkey PRIMARY KEY (session_id),
     CONSTRAINT token_unique UNIQUE (token),
     CONSTRAINT sessions_user_id_users_user_id FOREIGN KEY (user_id)

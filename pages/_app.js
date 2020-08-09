@@ -5,7 +5,6 @@ import Layout from 'components/Layout'
 class _App extends App {
   render() {
     const { Component, pageProps } = this.props
-    console.log("hello")
 
     return (
       <Layout>
