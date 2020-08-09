@@ -1,6 +1,8 @@
+import { APP_NAME } from "Common/constants"
 import bindModel from "Common/bindModel"
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap"
 import Joi from "@hapi/joi"
+import Router from "next/router"
 import simpleJsonClient from "Common/simpleJsonClient"
 import storage from "Common/storage"
 import { useEffect, useState } from "react"
@@ -35,13 +37,21 @@ const LoginPage = () => {
     e.preventDefault()
 
     if ((errorDetails || []).length <= 0) {
-      const { error, success } = await simpleJsonClient("/api/user/login",
+      const { error, result } = await simpleJsonClient("/api/user/login",
         { username, password })
 
       console.log(error)
 
-      if (success) {
-        storage("AMS-PreformanceReview").set("session", success)
+      if (result) {
+        storage(APP_NAME).set("session", result)
+
+        if (result.isAdmin) {
+          Router.push("/employees")
+        }
+
+        else {
+          Router.push("/reviews")
+        }
       }
     }
 

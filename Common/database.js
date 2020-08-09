@@ -6,8 +6,6 @@ const {
   AMSWS_POSTGRES_PW: postgresPassword = "postgres"
 } = process.env
 
-console.log({ postgresHost, postgresUsername, postgresPassword })
-
 const sql = postgres(`postgresql://${postgresUsername}:${postgresPassword}@${postgresHost}/ams-ws`)
 
 export default function database() {

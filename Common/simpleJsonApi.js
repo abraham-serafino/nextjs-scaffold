@@ -21,13 +21,13 @@ const simpleJsonApi = (schema, cb) => async (request, response) => {
     const result = await cb(body)
 
     if (typeof result === "undefined") {
-      console.log({ success: "" })
-      return response.status(200).json({ success: "" })
+      console.log({ result: "" })
+      return response.status(200).json({ result: "" })
     }
 
     else {
       console.log({ success: result })
-      return response.status(200).json({ success: result })
+      return response.status(200).json({ result: result })
     }
 
   } catch (error) {

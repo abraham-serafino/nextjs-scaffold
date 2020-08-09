@@ -39,7 +39,7 @@ const LoginAPI = simpleJsonApi(Joi.object({
     return {
       username: resultSet[0].username,
       fullname: resultSet[0].fullname,
-      isAdmin: Number.parseInt(resultSet[0].is_admin),
+      isAdmin: !! Number.parseInt(resultSet[0].is_admin),
       sessionToken,
       sessionData: {}
       }
