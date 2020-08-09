@@ -1,10 +1,10 @@
-import bindModel from "components/bindModel"
+import bindModel from "Common/bindModel"
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap"
 import Joi from "@hapi/joi"
 import { useEffect, useState } from "react"
-import Validation from "components/JoiValidation"
+import Validation from "Common/JoiValidation"
 
-const Login = () => {
+const LoginPage = () => {
 
   const [state, setState] = useState({
     username: "",
@@ -80,4 +80,4 @@ const Login = () => {
     )
 }
 
-export default Login
+export default LoginPage

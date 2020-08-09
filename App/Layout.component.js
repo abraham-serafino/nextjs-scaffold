@@ -1,7 +1,7 @@
 import { Col, Row } from "reactstrap"
-import Footer from "components/Footer"
+import Footer from "App/Footer.component"
 import { Fragment } from "react"
-import Header from "components/Header"
+import Header from "App/Header.component"
 
 const Layout = ({ title, children }) =>
 

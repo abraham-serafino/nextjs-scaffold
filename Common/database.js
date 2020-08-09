@@ -10,4 +10,6 @@ console.log({ postgresHost, postgresUsername, postgresPassword })
 
 const sql = postgres(`postgresql://${postgresUsername}:${postgresPassword}@${postgresHost}/ams-ws`)
 
-export default sql
+export default function database() {
+  return sql
+}

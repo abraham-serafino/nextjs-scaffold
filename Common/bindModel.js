@@ -1,7 +1,7 @@
 import get from "lodash.get"
 import set from "lodash.set"
 
-const bindModel = ([state, setState], handleChange = () => {}) => ({
+const bindModel = ([state, setState]) => ({
   model(path) {
     const value = get(state, path, "")
 
@@ -25,8 +25,6 @@ const bindModel = ([state, setState], handleChange = () => {}) => ({
           ...state,
           ...newState
           })
-
-        handleChange(path, newValue, originalValue)
       }
     };
   },
@@ -63,13 +61,6 @@ const bindModel = ([state, setState], handleChange = () => {}) => ({
           ...state,
           newState
           });
-
-        handleChange(pathToArray,
-          newValue,
-          originalValue,
-          index,
-          arrayElementSubPath
-          );
       }
     }
   },
