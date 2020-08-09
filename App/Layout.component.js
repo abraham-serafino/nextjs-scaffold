@@ -1,5 +1,4 @@
 import { Col, Row } from "reactstrap"
-import { createContainer } from "Common/SimpleStore"
 import Footer from "App/Footer.component"
 import { Fragment } from "react"
 import Header from "App/Header.component"
@@ -14,4 +13,4 @@ const Layout = ({ title, children }) =>
     </Col>
   </Row>
 
-export default createContainer(Layout)
+export default Layout

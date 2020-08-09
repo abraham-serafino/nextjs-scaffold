@@ -1,17 +1,18 @@
 import bindModel from "Common/bindModel"
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap"
 import Joi from "@hapi/joi"
+import simpleJsonClient from "Common/simpleJsonClient"
+import storage from "Common/storage"
 import { useEffect, useState } from "react"
 import Validation from "Common/JoiValidation"
 
 const LoginPage = () => {
-
   const [state, setState] = useState({
     username: "",
     password: "",
     shouldApplyValidation: false,
     errorDetails: []
-  })
+    })
 
   const { username, password, shouldApplyValidation, errorDetails } = state
 
@@ -19,21 +20,29 @@ const LoginPage = () => {
     const schema = Joi.object({
       username: Joi.string().required(),
       password: Joi.string().required()
-    })
+      })
 
     const { error: { details = [] } = {} } =
       schema.validate({ username, password }, { abortEarly: false })
 
     setState({ ...state, errorDetails: details })
+
   }, [username, password])
 
   const { model } = bindModel([state, setState])
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
 
     if ((errorDetails || []).length <= 0) {
-      alert("Will submit")
+      const { error, success } = await simpleJsonClient("/api/user/login",
+        { username, password })
+
+      console.log(error)
+
+      if (success) {
+        storage("AMS-PreformanceReview").set("session", success)
+      }
     }
 
     else {
