@@ -1,16 +1,16 @@
-import App from 'next/app'
+import { createSimpleStore } from "Common/SimpleStore"
+import { createWrapper } from "next-redux-wrapper"
 import Layout from 'App/Layout.component'
+import { userState } from "Login/User.store"
 
-class _App extends App {
-  render() {
-    const { Component, pageProps } = this.props
+const store = createWrapper(
+  (context) => createSimpleStore(userState),
+  { debug: true }
+  )
 
-    return (
-      <Layout>
-        <Component {...pageProps}></Component>
-      </Layout>
-      )
-  }
-}
+const App = ({ Component, pageProps }) =>
+  <Layout>
+    <Component {...pageProps}></Component>
+  </Layout>
 
-export default _App
+export default store.withRedux(App)

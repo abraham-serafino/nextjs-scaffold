@@ -1,7 +1,7 @@
 import { connect } from "react-redux"
 import { createStore, combineReducers } from "redux"
 
-const createActions = (actions) => {
+const createActions = (actions = {}) => {
   const actionCreators = {}
 
   for (const actionName of Object.getOwnPropertyNames(actions)) {

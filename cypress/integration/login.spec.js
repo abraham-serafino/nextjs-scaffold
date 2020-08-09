@@ -1,6 +1,6 @@
 describe('/users/login', () => {
   it('Should return a user if u/p is correct', () => {
-    cy.request("POST", "http://localhost:3000/api/users/login", {
+    cy.request("POST", "http://localhost:3000/api/user/login", {
       username: "admin",
       password: "password"
     }).then((response) => {
