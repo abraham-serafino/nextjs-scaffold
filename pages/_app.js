@@ -1,6 +1,6 @@
-import React from 'react'
 import App from 'next/app'
 import Layout from 'components/Layout'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class _App extends App {
   render() {

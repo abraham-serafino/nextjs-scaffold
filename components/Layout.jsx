@@ -1,22 +1,16 @@
+import { Col, Row } from "reactstrap"
+import Footer from "components/Footer"
 import { Fragment } from "react"
 import Header from "components/Header"
-import Footer from "components/Footer"
 
 const Layout = ({ title, children }) =>
-  <Fragment>
-  <head>
-    <title>{title}</title>
-    <meta charSet="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width,minimum-scale=1,initial-scale=1"
-      />
-  </head>
 
-  <Header />
-  {children}
-  <Footer />
-
-  </Fragment>
+  <Row className="d-flex justify-content-center">
+    <Col xs={11} md={5}>
+      <Header />
+      {children}
+      <Footer />
+    </Col>
+  </Row>
 
 export default Layout
