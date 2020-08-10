@@ -1,6 +1,7 @@
+import database from "Common/database"
 import Joi from "@hapi/joi"
 import simpleJsonApi from "Common/simpleJsonApi"
-import database from "Common/database"
+import { TWO_HOURS_IN_MILLISECONDS } from "Common/constants"
 import { v4 } from "uuid"
 
 const generateUuid = v4
@@ -25,7 +26,6 @@ const LoginAPI = simpleJsonApi(Joi.object({
 
     const { fullname, is_admin, user_id } = resultSet[0]
 
-    const TWO_HOURS_IN_MILLISECONDS = 2 * 60 * 60 * 1000
     const sessionToken = generateUuid()
 
     // delete any stale sessions for this browser
