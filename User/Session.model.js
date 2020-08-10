@@ -1,6 +1,8 @@
 import database from 'Common/database'
 import { TWO_HOURS_IN_MILLISECONDS } from 'Common/constants'
+import { v4 } from 'uuid'
 
+const generateUuid = v4
 const sql = database()
 
 const resetExpiration = async (sessionToken, userAgent) => {
@@ -67,6 +69,26 @@ const getSession = async sessionToken => {
   }
 }
 
+const createSession = async (userId, userAgent) => {
+  const sessionToken = generateUuid()
+
+  // create a session for the user
+  const resultSet = await sql`
+    insert into sessions (token, user_id, session_data, user_agent, expires)
+      values (
+        ${sessionToken},
+        ${userId},
+        '{}',
+        ${userAgent},
+        ${Date.now() + TWO_HOURS_IN_MILLISECONDS}
+        )
+      `
+
+  console.log(resultSet)
+
+  return getSession(sessionToken)
+}
+
 const updateSession = async (sessionToken, sessionData) => {
   const resultSet = await sql`
     UPDATE sessions
@@ -79,4 +101,22 @@ const updateSession = async (sessionToken, sessionData) => {
   return getSession(sessionToken)
 }
 
-export { resetExpiration, getSession, updateSession }
+const deleteStaleSessions = async (userId, userAgent) => {
+  console.log(userId, userAgent)
+
+  // delete any stale sessions for this browser
+  const resultSet = await sql`
+    DELETE FROM sessions
+      WHERE user_id=${userId} AND user_agent=${userAgent}
+      `
+
+  console.log(resultSet)
+}
+
+export {
+  resetExpiration,
+  getSession,
+  createSession,
+  updateSession,
+  deleteStaleSessions
+}
