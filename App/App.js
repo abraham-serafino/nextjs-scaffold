@@ -12,6 +12,10 @@ class _App extends App {
      if (! sessionToken) {
        Router.push('/login')
      }
+
+     else {
+       // retrieve session data from server
+     }
   }
 
   render() {
