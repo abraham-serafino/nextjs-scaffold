@@ -1,7 +1,7 @@
 import get from "lodash.get"
 import set from "lodash.set"
 
-const bindModel = ([state, setState]) => ({
+const bindModel = (state, setState) => ({
   model(path) {
     const value = get(state, path, "")
 

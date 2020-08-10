@@ -8,8 +8,9 @@ const sql = database()
 
 const LoginAPI = simpleJsonApi(Joi.object({
   username: Joi.string().required(),
-  password: Joi.string().required()
-}), async ({ username, password }) => {
+  password: Joi.string().required(),
+  userAgent: Joi.string().required()
+}), async ({ username, password, userAgent }) => {
 
     // check for username/password combination in the database
     const resultSet = await sql`
@@ -22,24 +23,33 @@ const LoginAPI = simpleJsonApi(Joi.object({
       throw new Error("Invalid credentials")
     }
 
+    const { fullname, is_admin, user_id } = resultSet[0]
+
     const TWO_HOURS_IN_MILLISECONDS = 2 * 60 * 60 * 1000
     const sessionToken = generateUuid()
 
+    // delete any stale sessions for this browser
+    const deleteStale = await sql`
+      DELETE FROM sessions
+        WHERE user_id=${user_id} AND user_agent=${userAgent}
+        `
+
     // create a session for the user
     const sessionResult = await sql`
-      insert into sessions (token, user_id, session_data, expires)
+      insert into sessions (token, user_id, session_data, user_agent, expires)
         values (
           ${sessionToken},
-          ${resultSet[0].user_id},
+          ${user_id},
           '{}',
+          ${userAgent},
           ${Date.now() + TWO_HOURS_IN_MILLISECONDS}
           )
         `
 
     return {
-      username: resultSet[0].username,
-      fullname: resultSet[0].fullname,
-      isAdmin: !! Number.parseInt(resultSet[0].is_admin),
+      username,
+      fullname,
+      isAdmin: !! Number.parseInt(is_admin),
       sessionToken,
       sessionData: {}
       }

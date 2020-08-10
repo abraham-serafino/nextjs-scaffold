@@ -9,6 +9,7 @@ CREATE TABLE public.sessions
     token uuid NOT NULL,
     session_data json,
     expires bigint DEFAULT 0,
+    user_agent character varying NOT NULL,
     CONSTRAINT sessions_pkey PRIMARY KEY (session_id),
     CONSTRAINT token_unique UNIQUE (token),
     CONSTRAINT sessions_user_id_users_user_id FOREIGN KEY (user_id)

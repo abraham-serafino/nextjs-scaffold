@@ -31,32 +31,37 @@ const LoginPage = () => {
 
   }, [username, password])
 
-  const { model } = bindModel([state, setState])
+  const { model } = bindModel(state, setState)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    if ((errorDetails || []).length <= 0) {
-      const { error, result } = await simpleJsonClient("/api/user/login",
-        { username, password })
-
-      console.log(error)
-
-      if (result) {
-        storage(APP_NAME).set("session", result)
-
-        if (result.isAdmin) {
-          Router.push("/employees")
-        }
-
-        else {
-          Router.push("/reviews")
-        }
-      }
+    if ((errorDetails || []).length > 0) {
+      setState({ ...state, shouldApplyValidation: true })
+      return
     }
 
-    else {
-      setState({ ...state, shouldApplyValidation: true })
+    const { userAgent } = window.navigator
+
+    const { error, result } =
+      await simpleJsonClient("/api/user/login", {
+        username,
+        password,
+        userAgent
+        })
+
+    console.log(error)
+
+    if (result) {
+      storage(APP_NAME).set("session", result)
+
+      if (result.isAdmin) {
+        Router.push("/employees")
+      }
+
+      else {
+        Router.push("/reviews")
+      }
     }
   }
 
